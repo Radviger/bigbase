@@ -43,6 +43,9 @@ namespace Big
 
 		using WndProc = LRESULT(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		WndProc* m_WndProc;
+
+		using GetEventData = bool(std::int32_t eventGroup, std::int32_t eventIndex, std::int64_t* args, std::uint32_t argCount);
+		GetEventData* m_GetEventData;
 	};
 
 	inline std::unique_ptr<GameVariables> g_GameVariables;
