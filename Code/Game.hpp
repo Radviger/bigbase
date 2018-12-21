@@ -46,6 +46,9 @@ namespace Big
 
 		using GetEventData = bool(std::int32_t eventGroup, std::int32_t eventIndex, std::int64_t* args, std::uint32_t argCount);
 		GetEventData* m_GetEventData;
+
+		using GetLabelText = const char*(void* unk, const char* label);
+		GetLabelText* m_GetLabelText;
 	};
 
 	inline std::unique_ptr<GameVariables> g_GameVariables;

@@ -99,6 +99,7 @@ namespace Big
 
 		MH_Initialize();
 		MH_CreateHook(g_GameFunctions->m_IsDlcPresent, &Hooks::IsDlcPresent, &m_OriginalIsDlcPresent);
+		MH_CreateHook(g_GameFunctions->m_GetLabelText, &Hooks::GetLabelText, &m_OriginalGetLabelText);
 		MH_CreateHook(g_GameFunctions->m_GetEventData, &Hooks::GetEventData, &m_OriginalGetEventData);
 		MH_CreateHook(g_GameFunctions->m_WndProc, &Hooks::WndProc, &m_OriginalWndProc);
 
@@ -110,6 +111,7 @@ namespace Big
 	{
 		MH_RemoveHook(g_GameFunctions->m_WndProc);
 		MH_RemoveHook(g_GameFunctions->m_GetEventData);
+		MH_RemoveHook(g_GameFunctions->m_GetLabelText);
 		MH_RemoveHook(g_GameFunctions->m_IsDlcPresent);
 		MH_Uninitialize();
 	}

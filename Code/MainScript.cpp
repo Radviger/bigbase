@@ -4,6 +4,7 @@
 #include "Natives.hpp"
 #include "Timer.hpp"
 #include "Translation.hpp"
+#include "CustomText.hpp"
 #include "UI/UIManager.hpp"
 #include "UI/BoolOption.hpp"
 #include "UI/ChooseOption.hpp"
@@ -48,6 +49,9 @@ namespace Big
 	{
 		m_Initialized = true;
 		using namespace UserInterface;
+
+		g_CustomText->AddText(CONSTEXPR_JOAAT("HUD_JOINING"), "Isn't " BIGBASE_NAME " the fucking best?");
+		g_CustomText->AddText(CONSTEXPR_JOAAT("HUD_TRANSP"), "Isn't " BIGBASE_NAME " the fucking best?");
 
 		g_UiManager->AddSubmenu<RegularSubmenu>("Home", SubmenuHome, [](RegularSubmenu* sub)
 		{
