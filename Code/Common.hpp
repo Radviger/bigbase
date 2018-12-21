@@ -11,6 +11,7 @@
 #include <d3d11.h>
 
 #include <cassert>
+#include <cinttypes>
 #include <cstdarg>
 #include <cstddef>
 #include <cstdint>
@@ -56,6 +57,8 @@ namespace Big
 	inline std::atomic_bool g_Running = true;
 
 	inline std::uint32_t g_SelectedPlayer{};
+
+	inline bool g_LogScriptEvents = false;
 }
 
 #include "Settings.hpp"

@@ -40,6 +40,22 @@ namespace Big
 		return static_cast<decltype(&GetLabelText)>(g_Hooking->m_OriginalGetLabelText)(unk, label);
 	}
 
+	bool Hooks::GetEventData(std::int32_t eventGroup, std::int32_t eventIndex, std::int64_t* args, std::uint32_t argCount)
+	{
+		auto result = static_cast<decltype(&GetEventData)>(g_Hooking->m_OriginalGetEventData)(eventGroup, eventIndex, args, argCount);
+		
+		if (result && g_LogScriptEvents)
+		{
+			g_Logger->Info("Script event group: %i", eventGroup);
+			g_Logger->Info("Script event index: %i", eventIndex);
+			g_Logger->Info("Script event argcount: %i", argCount);
+			for (std::uint32_t i = 0; i < argCount; ++i)
+				g_Logger->Info("Script event args[%u] : %" PRIi64, i, args[i]);
+		}
+
+		return result;
+	}
+
 	LRESULT Hooks::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		g_D3DRenderer->WndProc(hWnd, msg, wParam, lParam);
@@ -83,6 +99,7 @@ namespace Big
 
 		MH_Initialize();
 		MH_CreateHook(g_GameFunctions->m_IsDlcPresent, &Hooks::IsDlcPresent, &m_OriginalIsDlcPresent);
+		MH_CreateHook(g_GameFunctions->m_GetEventData, &Hooks::GetEventData, &m_OriginalGetEventData);
 		MH_CreateHook(g_GameFunctions->m_WndProc, &Hooks::WndProc, &m_OriginalWndProc);
 
 		m_D3DHook.Hook(&Hooks::Present, Hooks::PresentIndex);
@@ -92,6 +109,7 @@ namespace Big
 	Hooking::~Hooking() noexcept
 	{
 		MH_RemoveHook(g_GameFunctions->m_WndProc);
+		MH_RemoveHook(g_GameFunctions->m_GetEventData);
 		MH_RemoveHook(g_GameFunctions->m_IsDlcPresent);
 		MH_Uninitialize();
 	}

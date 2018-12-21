@@ -56,6 +56,8 @@ namespace Big
 			sub->AddOption<SubOption>("Settings", nullptr, SubmenuSettings);
 			sub->AddOption<RegularOption>(std::move(RegularOption("Version").SetRightText(g_GameVariables->m_GameBuild)));
 
+			sub->AddOption<BoolOption<bool>>("Log Script Events", nullptr, &g_LogScriptEvents, BoolDisplay::OnOff);
+
 			sub->AddOption<RegularOption>("Unload", "Unload the menu.", []
 			{
 				g_Running = false;

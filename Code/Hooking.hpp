@@ -7,6 +7,7 @@ namespace Big
 	{
 		static bool IsDlcPresent(std::uint32_t hash);
 		static const char* GetLabelText(void* unk, const char* label);
+		static bool GetEventData(std::int32_t eventGroup, std::int32_t eventIndex, std::int64_t* args, std::uint32_t argCount);
 		static LRESULT WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 		static constexpr auto PresentIndex = 8;
@@ -35,6 +36,7 @@ namespace Big
 
 		void* m_OriginalIsDlcPresent{};
 		void* m_OriginalGetLabelText{};
+		void* m_OriginalGetEventData{};
 		void* m_OriginalWndProc{};
 		VMTHook m_D3DHook;
 
