@@ -9,8 +9,14 @@ namespace Big
 		explicit TranslationManager()
 		{
 			std::snprintf(&m_TranslationDir[0], sizeof(m_TranslationDir) - 1, "%s\\" BIGBASE_NAME "\\Translations\\", std::getenv("appdata"));
-			if (!std::filesystem::exists(&m_TranslationDir[0]))
-				std::filesystem::create_directory(&m_TranslationDir[0]);
+			try
+			{
+				if (!std::filesystem::exists(&m_TranslationDir[0]))
+					std::filesystem::create_directory(&m_TranslationDir[0]);
+			}
+			catch (fs::filesystem_error const&)
+			{
+			}
 		}
 
 		void LoadTranslations(const char* name)
@@ -18,12 +24,12 @@ namespace Big
 			m_Translations.clear();
 			g_Logger->Info("Loading %s translations.", name);
 
-			char filename[100] = {};
-			std::snprintf(&filename[0], sizeof(filename) - 1, "%s.big", name);
-			auto filePath = std::filesystem::path(m_TranslationDir).append(filename);
-
 			try
 			{
+				char filename[100] = {};
+				std::snprintf(&filename[0], sizeof(filename) - 1, "%s.big", name);
+				auto filePath = std::filesystem::path(m_TranslationDir).append(filename);
+
 				std::ifstream file(filePath);
 				if (file.good())
 				{

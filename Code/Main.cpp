@@ -20,8 +20,6 @@ BOOL DllMain(HINSTANCE hInstance, DWORD reason, LPVOID)
 		g_Module = hInstance;
 		CreateThread(nullptr, 0, [](LPVOID) -> DWORD
 		{
-			FlushInstructionCache(GetCurrentProcess(), nullptr, 0);
-			std::locale::global(std::locale("english_us." BIGBASE_STRINGIZE(CP_UTF8)));
 			g_Logger = std::make_unique<Logger>();
 			g_Logger->Info("BigBase injected.");
 
@@ -91,7 +89,6 @@ BOOL DllMain(HINSTANCE hInstance, DWORD reason, LPVOID)
 			g_Logger->Info("BigBase unloaded.");
 			g_Logger.reset();
 
-			FlushInstructionCache(GetCurrentProcess(), nullptr, 0);
 			FreeLibraryAndExitThread(g_Module, 0);
 		}, nullptr, 0, nullptr);
 	}
