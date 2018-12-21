@@ -49,6 +49,35 @@ namespace Big
 		std::function<void()> m_Action;
 	};
 
+	class NetworkControlCallback : public AbstractCallback
+	{
+	public:
+		explicit NetworkControlCallback(std::int32_t entity, std::function<void()> action):
+			m_Entity(entity),
+			m_Action(std::move(action))
+		{
+		}
+
+		bool IsDone() override
+		{
+			return NETWORK::NETWORK_HAS_CONTROL_OF_ENTITY(m_Entity);
+		}
+
+		void OnSuccess() override
+		{
+			if (m_Action)
+				std::invoke(m_Action);
+		}
+
+		void OnFailure() override
+		{
+			NETWORK::NETWORK_REQUEST_CONTROL_OF_ENTITY(m_Entity);
+		}
+	private:
+		std::int32_t m_Entity;
+		std::function<void()> m_Action;
+	};
+
 	class CallbackScript : public Script
 	{
 	public:
