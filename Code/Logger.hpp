@@ -13,8 +13,26 @@ namespace Big
 		Logger& operator=(Logger const&) = delete;
 		Logger& operator=(Logger&&) = delete;
 
+		/**
+		 * \brief Logs an info message
+		 * \param format The format of the logged text
+		 * \param ... The arguments to format the string
+		 */
 		void Info(const char* format, ...);
+
+		/**
+		 * \brief Logs an error message
+		 * \param format The format of the logged text
+		 * \param ... The arguments to format the string
+		 */
 		void Error(const char* format, ...);
+
+		/**
+		 * \brief Logs a message
+		 * \param type The type of the logged text, visual only
+		 * \param format The format of the logged text
+		 * \param args The arguments to format the string
+		 */
 		void Log(const char* type, const char* format, std::va_list args);
 
 		std::mutex& GetMutex();

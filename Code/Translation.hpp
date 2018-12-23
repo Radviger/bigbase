@@ -19,6 +19,10 @@ namespace Big
 			}
 		}
 
+		/**
+		 * \brief Loads a translation file
+		 * \param name The stem of the translation file
+		 */
 		void LoadTranslations(const char* name)
 		{
 			m_Translations.clear();
@@ -56,6 +60,11 @@ namespace Big
 			}
 		}
 
+		/**
+		 * \brief Loads a translation file
+		 * \param label The hash of the label
+		 * \return The translation string, or a placeholder string
+		 */
 		const char* GetTranslation(std::uint32_t label)
 		{
 			if (auto it = m_Translations.find(label); it != m_Translations.end())
@@ -73,6 +82,10 @@ namespace Big
 			}
 		}
 
+		/**
+		 * \brief Gets the directory of the translations
+		 * \return const char*
+		 */
 		const char* GetTranslationDirectory()
 		{
 			return &m_TranslationDir[0];

@@ -3,6 +3,11 @@
 
 namespace Big
 {
+	/**
+	 * \brief Checks if a key is pressed
+	 * \param key A virtual key code
+	 * \return bool
+	 */
 	inline bool IsKeyPressed(std::uint16_t key)
 	{
 		if (GetForegroundWindow() == g_GameVariables->m_GameWindow)
@@ -16,6 +21,9 @@ namespace Big
 		return false;
 	}
 
+	/**
+	 * \brief A stream buffer that uses a char[] buffer
+	 */
 	class MemoryStreamBuf : public std::streambuf
 	{
 	public:
@@ -32,6 +40,9 @@ namespace Big
 		}
 	};
 
+	/**
+	 * \brief An input/output stream that uses a char[] buffer
+	 */
 	class MemoryStringStream : virtual MemoryStreamBuf, public std::iostream
 	{
 	public:
@@ -49,6 +60,9 @@ namespace Big
 		}
 	};
 
+	/**
+	 * \brief A MemoryStringStream with a built in buffer
+	 */
 	template <std::size_t N>
 	class MemoryStringStreamWithBuffer : public MemoryStringStream
 	{
@@ -65,6 +79,9 @@ namespace Big
 		return (c >= 'A' && c <= 'Z') ? c + ('a' - 'A') : c;
 	}
 
+	/**
+	 * \brief Calculates JOAAT hash of string at compile time
+	 */
 	template <std::size_t CharCount>
 	struct ConstexprJooat
 	{
@@ -95,6 +112,11 @@ namespace Big
 		}
 	};
 
+	/**
+	 * \brief Hashes a string with the Jenkins-one-at-a-time hash function
+	 * \param str The string to be hashed
+	 * \return Hash of str
+	 */
 	inline constexpr std::uint32_t Joaat(const char* str)
 	{
 		std::uint32_t hash = 0;

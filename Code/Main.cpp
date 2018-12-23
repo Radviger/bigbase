@@ -1,4 +1,3 @@
-// Dll entry point
 #include "Game.hpp"
 #include "Hooking.hpp"
 #include "ScriptManager.hpp"
@@ -11,6 +10,11 @@
 #include "UI/UIManager.hpp"
 #include "Translation.hpp"
 
+/**
+ * \brief The entry point of the library
+ * \param hInstance The base address of the DLL
+ * \param reason The reason for this function being called
+ */
 BOOL DllMain(HINSTANCE hInstance, DWORD reason, LPVOID)
 {
 	using namespace Big;

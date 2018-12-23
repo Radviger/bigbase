@@ -138,6 +138,11 @@ namespace Big
 		Invoker& operator=(Invoker const&) = delete;
 		Invoker& operator=(Invoker&&) = delete;
 
+		/**
+		 * \brief Gets a natives handler
+		 * \param hash The hash of the native to search for
+		 * \return A pointer to the entrypoint of the native
+		 */
 		void* GetHandler(std::uint64_t hash)
 		{
 			for (auto reg = g_GameVariables->m_NativeRegistrations[hash & 0xFF]; reg; reg = reg->GetNextRegistration())
@@ -154,23 +159,39 @@ namespace Big
 			return nullptr;
 		}
 
+		/**
+		 * \brief Prepares a native to be called
+		 */
 		void BeginCall()
 		{
 			m_Context.Reset();
 		}
 
+		/**
+		 * \brief Pushes a value on the native context
+		 * \param value The value to push
+		 */
 		template <typename T>
 		void Push(T&& value)
 		{
 			m_Context.Push(std::forward<T>(value));
 		}
 
+		/**
+		 * \brief Gets the return value of the last native call
+		 * \return T*
+		 */
 		template <typename T>
 		T GetReturn()
 		{
 			return m_Context.GetReturnValue<T>();
 		}
 
+		/**
+		 * \brief Gets the new hash for a native
+		 * \param oldHash The first ever hash of the native
+		 * \return The new hash of the native, or std::nullopt if not found
+		 */
 		std::optional<std::uint64_t> GetNewHash(std::uint64_t oldHash)
 		{
 			for (auto it = std::begin(g_Crossmap); it != std::end(g_Crossmap); ++it)
@@ -180,6 +201,10 @@ namespace Big
 			return std::nullopt;
 		}
 
+		/**
+		 * \brief Calls the native
+		 * \param hash The first ever hash of the native
+		 */
 		void EndCall(std::uint64_t hash)
 		{
 			if (auto newHash = GetNewHash(hash); newHash.has_value())

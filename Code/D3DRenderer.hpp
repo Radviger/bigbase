@@ -12,12 +12,29 @@ namespace Big
 		D3DRenderer& operator=(D3DRenderer const&) = delete;
 		D3DRenderer& operator=(D3DRenderer&&) = delete;
 
+		/**
+		 * \brief Prepares the frame.
+		 */
 		void BeginFrame();
+
+		/**
+		 * \brief Finishes the frame and renders.
+		 */
 		void EndFrame();
 
+		/**
+		 * \brief Invalidates rendering resources
+		 */
 		void PreResize();
+
+		/**
+		 * \brief Finishes the frame and renders.
+		 */
 		void PostResize();
 
+		/**
+		 * \brief Processes input messages.
+		 */
 		void WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	private:
 		IDXGISwapChain* m_Swapchain{};

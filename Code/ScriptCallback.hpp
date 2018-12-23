@@ -13,8 +13,20 @@ namespace Big
 		AbstractCallback(AbstractCallback&&) = delete;
 		AbstractCallback& operator=(AbstractCallback&&) = delete;
 
+		/**
+		 * \brief Is the callback completed?
+		 * \return bool
+		 */
 		virtual bool IsDone() = 0;
+
+		/**
+		 * \brief Called when IsDone() returns true
+		 */
 		virtual void OnSuccess() = 0;
+
+		/**
+		 * \brief Called when IsDone() returns false 
+		 */
 		virtual void OnFailure() = 0;
 	protected:
 		AbstractCallback() = default;
@@ -90,6 +102,10 @@ namespace Big
 		void Destroy() override;
 		void Tick() override;
 
+		/**
+		 * \brief Adds a callback to the list
+		 * \param args... The arguments to be passed to CallbackType's constructor
+		 */
 		template <typename CallbackType, typename ...TArgs>
 		void AddCallback(TArgs&&... args)
 		{
