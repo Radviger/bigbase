@@ -23,7 +23,7 @@ namespace Big
 
 	void CallbackScript::Tick()
 	{
-		for (auto it = m_Callbacks.begin(); it != m_Callbacks.end(); ++it)
+		for (auto it = m_Callbacks.begin(); it != m_Callbacks.end();)
 		{
 			auto&& cb = *it;
 			if (cb->IsDone())
@@ -34,6 +34,7 @@ namespace Big
 			else
 			{
 				cb->OnFailure();
+				++it;
 			}
 		}
 	}
